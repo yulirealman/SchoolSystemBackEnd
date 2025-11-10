@@ -44,5 +44,15 @@ public class DeptServiceImp implements DeptService {
         return deptMapper.getById( id);
     }
 
+    @Override
+    public void update(Dept dept) {
+
+        //front end will send id, and name
+        //and create time is fixed, so we only update updateTime
+        dept.setUpdateTime(LocalDateTime.now());
+        deptMapper.update(dept);
+
+    }
+
 
 }
