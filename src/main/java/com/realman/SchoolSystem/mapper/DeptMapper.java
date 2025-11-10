@@ -1,0 +1,19 @@
+package com.realman.SchoolSystem.mapper;
+
+import com.realman.SchoolSystem.pojo.Dept;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
+
+@Mapper
+public interface DeptMapper {
+
+    @Select("select * from dept where id = #{id}")
+    Dept getDeptById(Integer id);
+
+    @Select("select id, name, create_time , update_time  from dept order by update_time desc")
+    List<Dept> findAll();
+
+
+}
