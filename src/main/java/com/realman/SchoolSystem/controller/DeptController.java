@@ -32,4 +32,13 @@ public class DeptController {
     }
 
 
+    @PostMapping("/depts")
+    public Result insert(@RequestBody Dept dept) {
+        //use request body instead of request param at post or put request
+        System.out.println("Add Department");
+        deptService.insert(dept);
+        return Result.success();
+    }
+
+
 }
