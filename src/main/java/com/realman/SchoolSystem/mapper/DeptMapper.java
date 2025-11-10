@@ -11,8 +11,8 @@ import java.util.List;
 @Mapper
 public interface DeptMapper {
 
-    @Select("select * from dept where id = #{id}")
-    Dept getDeptById(Integer id);
+    @Select("select id, name, create_time , update_time  from dept where id = #{id}")
+    Dept getById(Integer id);
 
     @Select("select id, name, create_time , update_time  from dept order by update_time desc")
     List<Dept> findAll();

@@ -40,5 +40,12 @@ public class DeptController {
         return Result.success();
     }
 
+    @GetMapping("/depts/{id}")
+    public Result getDeptById(@PathVariable("id") Integer id) {
+        //often use this when we need to edit
+        System.out.println("Search Department By Id");
+        Dept dept = deptService.getById(id);
+        return Result.success(dept);
+    }
 
 }
