@@ -23,4 +23,6 @@ public class Emp {
     private Integer deptId;
     private Date createTime;
     private Date updateTime;
+
+    private String deptName;
 }
