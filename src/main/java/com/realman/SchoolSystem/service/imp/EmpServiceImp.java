@@ -20,7 +20,7 @@ public class EmpServiceImp implements EmpService {
 
     @Override
     public PageResult<Emp> page(EmpQueryParam  param) {
-        Long total = empMapper.count();
+        Long total = empMapper.count(param);
 
         Integer offset = (param.getPage() - 1) * param.getPageSize();
         List<Emp> rows = empMapper.list(param,offset);

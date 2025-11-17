@@ -2,21 +2,40 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="com.realman.SchoolSystem.mapper.EmpMapper">
 
+    <!-- Reusable where clause -->
+    <sql id="empFilter">
+        <where>
+            <if test="param.name != null and param.name != ''">
+                e.name like concat('%', #{param.name}, '%')
+            </if>
+            <if test="param.gender != null">
+                and e.gender = #{param.gender}
+            </if>
+            <if test="param.begin != null and param.end != null">
+                and e.entry_date between #{param.begin} and #{param.end}
+            </if>
+        </where>
+    </sql>
 
+    <!-- Count query using the same filters -->
     <select id="count" resultType="java.lang.Long">
-        select count(*) from emp e left join dept d on e.dept_id = d.id
+        select count(*)
+        from emp e
+        left join dept d on e.dept_id = d.id
+        <include refid="empFilter"/>
     </select>
 
+    <!-- List query -->
     <select id="list" resultType="com.realman.SchoolSystem.pojo.Emp">
-        select e.*, d.name as deptName from emp e left join dept d on e.dept_id = d.id
-        where e.name like concat('%', #{param.name}, '%')
-        and e.gender = #{param.gender}
-        and e.entry_date between #{param.begin} and #{param.end}
-        order by e.update_time desc limit #{offset}, #{param.pageSize}
+        select e.*, d.name as deptName
+        from emp e
+        left join dept d on e.dept_id = d.id
+        <include refid="empFilter"/>
+        order by e.update_time desc
+        limit #{offset}, #{param.pageSize}
     </select>
-
 
 </mapper>
+

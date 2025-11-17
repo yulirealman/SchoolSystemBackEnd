@@ -12,9 +12,9 @@ import java.util.List;
 @Mapper
 public interface EmpMapper {
 
-    Long count();
+    Long count(@Param("param") EmpQueryParam param);
 
-    List<Emp> list(EmpQueryParam param,
+    List<Emp> list(@Param("param") EmpQueryParam param,
                    @Param("offset") Integer offset);
 
 

@@ -27,7 +27,7 @@ public class EmpController {
 
     @GetMapping
     public Result page(EmpQueryParam  param) {
-        log.info("Search by page {},{},{},{},{},{}",param.getPage(),param.getPageSize(),param.getName(),param.getGender(),param.getBegin(),param.getEnd());
+        log.info("Search by page {}",param);
         PageResult<Emp> pageResult  =  empService.page(param);
         return Result.success(pageResult);
     }
