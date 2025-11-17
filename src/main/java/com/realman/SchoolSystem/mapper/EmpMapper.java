@@ -1,6 +1,7 @@
 package com.realman.SchoolSystem.mapper;
 
 import com.realman.SchoolSystem.pojo.Emp;
+import com.realman.SchoolSystem.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -13,12 +14,8 @@ public interface EmpMapper {
 
     Long count();
 
-    List<Emp> list(@Param("name") String name,
-                   @Param("gender") Integer gender,
-                   @Param("begin") LocalDate begin,
-                   @Param("end") LocalDate end,
-                   @Param("offset") Integer offset,
-                   @Param("pageSize") Integer pageSize);
+    List<Emp> list(EmpQueryParam param,
+                   @Param("offset") Integer offset);
 
 
 }

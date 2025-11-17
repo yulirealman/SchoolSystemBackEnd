@@ -1,6 +1,7 @@
 package com.realman.SchoolSystem.controller;
 
 import com.realman.SchoolSystem.pojo.Emp;
+import com.realman.SchoolSystem.pojo.EmpQueryParam;
 import com.realman.SchoolSystem.pojo.PageResult;
 import com.realman.SchoolSystem.pojo.Result;
 import com.realman.SchoolSystem.service.EmpService;
@@ -25,14 +26,9 @@ public class EmpController {
 
 
     @GetMapping
-    public Result page(String name,
-                       Integer gender,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate begin,
-                       @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate end,
-                       @RequestParam(name = "page", defaultValue = "1") Integer page,
-                       @RequestParam(name="pageSize", defaultValue = "10") Integer pageSize) {
-        log.info("Search by page {},{},{},{},{},{}",page,pageSize,name,gender,begin,end);
-        PageResult<Emp> pageResult  =  empService.page(name, gender, begin, end,page, pageSize);
+    public Result page(EmpQueryParam  param) {
+        log.info("Search by page {},{},{},{},{},{}",param.getPage(),param.getPageSize(),param.getName(),param.getGender(),param.getBegin(),param.getEnd());
+        PageResult<Emp> pageResult  =  empService.page(param);
         return Result.success(pageResult);
     }
 

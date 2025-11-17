@@ -12,10 +12,10 @@
 
     <select id="list" resultType="com.realman.SchoolSystem.pojo.Emp">
         select e.*, d.name as deptName from emp e left join dept d on e.dept_id = d.id
-        where e.name like concat('%', #{name}, '%')
-        and e.gender = #{gender}
-        and e.entry_date between #{begin} and #{end}
-        order by e.update_time desc limit #{offset}, #{pageSize}
+        where e.name like concat('%', #{param.name}, '%')
+        and e.gender = #{param.gender}
+        and e.entry_date between #{param.begin} and #{param.end}
+        order by e.update_time desc limit #{offset}, #{param.pageSize}
     </select>
 
 

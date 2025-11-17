@@ -2,6 +2,7 @@ package com.realman.SchoolSystem.service.imp;
 
 import com.realman.SchoolSystem.mapper.EmpMapper;
 import com.realman.SchoolSystem.pojo.Emp;
+import com.realman.SchoolSystem.pojo.EmpQueryParam;
 import com.realman.SchoolSystem.pojo.PageResult;
 import com.realman.SchoolSystem.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,11 @@ public class EmpServiceImp implements EmpService {
 
 
     @Override
-    public PageResult<Emp> page(String name, Integer gender, LocalDate begin, LocalDate end, Integer page, Integer pageSize) {
+    public PageResult<Emp> page(EmpQueryParam  param) {
         Long total = empMapper.count();
 
-        Integer offset = (page - 1) * pageSize;
-        List<Emp> rows = empMapper.list(name, gender, begin, end,offset, pageSize);
+        Integer offset = (param.getPage() - 1) * param.getPageSize();
+        List<Emp> rows = empMapper.list(param,offset);
 
 
 
