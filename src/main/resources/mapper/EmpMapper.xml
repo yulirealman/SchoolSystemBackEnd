@@ -37,5 +37,33 @@
         limit #{offset}, #{param.pageSize}
     </select>
 
+    <insert id="insert" useGeneratedKeys="true" keyProperty="emp.id">
+        INSERT INTO emp (
+        username,
+        name,
+        gender,
+        phone,
+        job,
+        salary,
+        image,
+        entry_date,
+        dept_id,
+        create_time,
+        update_time
+        ) VALUES (
+        #{emp.username},
+        #{emp.name},
+        #{emp.gender},
+        #{emp.phone},
+        #{emp.job},
+        #{emp.salary},
+        #{emp.image},
+        #{emp.entryDate},
+        #{emp.deptId},
+        #{emp.createTime},
+        #{emp.updateTime}
+        )
+    </insert>
+
 </mapper>
 

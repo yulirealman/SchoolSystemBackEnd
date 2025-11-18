@@ -3,6 +3,7 @@ package com.realman.SchoolSystem.pojo;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,8 +15,10 @@ import java.util.Date;
 public class EmpExpr {
     private Integer id;
     private Integer empId;
-    private LocalDateTime beginDate;
-    private LocalDateTime endDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate begin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate end;
     private String company;
     private String job;
 }

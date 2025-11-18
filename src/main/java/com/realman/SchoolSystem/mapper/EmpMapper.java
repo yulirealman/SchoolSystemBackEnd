@@ -18,4 +18,5 @@ public interface EmpMapper {
                    @Param("offset") Integer offset);
 
 
+    void insert(@Param("emp")Emp emp);
 }
