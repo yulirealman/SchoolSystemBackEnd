@@ -62,4 +62,10 @@ public class EmpServiceImp implements EmpService {
         empMapper.deleteByIds(ids);
         empExprMapper.deleteByEmpIds(ids);
     }
+
+    @Override
+    public Emp getInfo(Integer id) {
+        return empMapper.getById(id);
+
+    }
 }

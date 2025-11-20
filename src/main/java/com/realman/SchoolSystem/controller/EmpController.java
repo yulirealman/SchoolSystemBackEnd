@@ -41,4 +41,10 @@ public class EmpController {
         return Result.success();
     }
 
+    @GetMapping("/{id}")
+    public Result getInfo(@PathVariable("id") Integer id) {
+        log.info("Search Emp By Id {}", id);
+        Emp emp = empService.getInfo(id);
+        return Result.success(emp);
+    }
 }
