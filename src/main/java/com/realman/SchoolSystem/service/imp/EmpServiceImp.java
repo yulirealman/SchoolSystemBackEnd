@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -63,9 +64,39 @@ public class EmpServiceImp implements EmpService {
         empExprMapper.deleteByEmpIds(ids);
     }
 
+
+
     @Override
     public Emp getInfo(Integer id) {
         return empMapper.getById(id);
+
+    }
+
+
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void update(Emp emp) {
+        // so emp contains updated fields, not only basic info
+        // but also emp experience list
+        // we will just remove all emp experience from database
+        // and insert this new emp experience list
+        emp.setUpdateTime(LocalDateTime.now());
+        empMapper.updateById(emp);
+
+
+        // this deletes all emp experience by emp id
+        empExprMapper.deleteByEmpIds(Arrays.asList(emp.getId()));
+
+        // now add new emp experience
+        List<EmpExpr> exprList = emp.getExprList();
+        if(!CollectionUtils.isEmpty(exprList)){
+            exprList.forEach(empExpr -> {
+                empExpr.setEmpId(emp.getId());
+
+            });
+            empExprMapper.insertBatch(exprList);
+        }
 
     }
 }

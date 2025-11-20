@@ -73,6 +73,7 @@
         </foreach>
     </delete>
 
+<!--    use this because emp is a complex  object, we have to manually map the fields-->
     <resultMap id="empResultMap" type="com.realman.SchoolSystem.pojo.Emp">
         <!-- Emp fields -->
         <id property="id" column="id"/>
@@ -88,7 +89,6 @@
         <result property="deptId" column="dept_id"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
-        <result property="deptName" column="deptName"/>
 
         <!-- emp_expr list -->
         <collection property="exprList" ofType="com.realman.SchoolSystem.pojo.EmpExpr">
@@ -113,6 +113,25 @@
         left join emp_expr ee on e.id = ee.emp_id
         where e.id= #{id}
     </select>
+
+    <update id="updateById">
+        update emp
+        <set>
+            <if test="username != null and username !=''">username = #{username},</if>
+            <if test="password != null and password !=''">password = #{password},</if>
+            <if test="name != null and name !=''">name = #{name},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="phone != null and phone!=''">phone = #{phone},</if>
+            <if test="job != null">job = #{job},</if>
+            <if test="salary != null">salary = #{salary},</if>
+            <if test="image != null and image!=''">image = #{image},</if>
+            <if test="entryDate != null">entry_date = #{entryDate},</if>
+            <if test="deptId != null">dept_id = #{deptId},</if>
+            <if test="updateTime != null">update_time = #{updateTime}</if>
+            <!-- always update -->
+        </set>
+        where id = #{id};
+    </update>
 
 </mapper>
 
