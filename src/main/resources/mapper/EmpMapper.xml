@@ -65,5 +65,12 @@
         )
     </insert>
 
+    <delete id="deleteByIds">
+        delete from emp
+        where id in
+        <foreach collection="ids" item="empId" open="(" separator="," close=")">
+            #{empId}
+        </foreach>
+    </delete>
 </mapper>
 

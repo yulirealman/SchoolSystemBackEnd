@@ -7,11 +7,9 @@ import com.realman.SchoolSystem.pojo.Result;
 import com.realman.SchoolSystem.service.EmpService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @RequestMapping("/emps")
@@ -36,5 +34,11 @@ public class EmpController {
         return Result.success();
     }
 
+    @DeleteMapping
+    public Result delete(@RequestParam("id") List<Integer> ids) {
+        log.info("Delete Emp By Id {}", ids);
+        empService.delete(ids);
+        return Result.success();
+    }
 
 }

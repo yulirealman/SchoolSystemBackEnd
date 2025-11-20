@@ -9,11 +9,10 @@ import com.realman.SchoolSystem.pojo.PageResult;
 import com.realman.SchoolSystem.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -36,8 +35,10 @@ public class EmpServiceImp implements EmpService {
         return new PageResult<Emp>(total,rows);
     }
 
+    @Transactional(rollbackFor = {Exception.class}) //use transaction when involve multiple  tables
     @Override
     public void save(Emp emp) {
+
         emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
         empMapper.insert(emp);
@@ -53,5 +54,12 @@ public class EmpServiceImp implements EmpService {
         }
 
 
+    }
+
+    @Transactional(rollbackFor = {Exception.class})
+    @Override
+    public void delete(List< Integer> ids) {
+        empMapper.deleteByIds(ids);
+        empExprMapper.deleteByEmpIds(ids);
     }
 }
