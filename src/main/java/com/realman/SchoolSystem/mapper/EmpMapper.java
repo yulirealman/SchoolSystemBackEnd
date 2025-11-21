@@ -2,6 +2,8 @@ package com.realman.SchoolSystem.mapper;
 
 import com.realman.SchoolSystem.pojo.Emp;
 import com.realman.SchoolSystem.pojo.EmpQueryParam;
+import com.realman.SchoolSystem.pojo.JobOption;
+import com.realman.SchoolSystem.pojo.JobStatics;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +25,6 @@ public interface EmpMapper {
     Emp getById(Integer id);
 
     void updateById(Emp emp);
+
+    List<JobStatics> countEmpJobData();
 }

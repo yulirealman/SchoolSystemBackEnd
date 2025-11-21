@@ -133,5 +133,20 @@
         where id = #{id};
     </update>
 
+    <select id="countEmpJobData" resultType="com.realman.SchoolSystem.pojo.JobStatics">
+        SELECT
+        (CASE
+        WHEN job = 1 THEN 'Homeroom Teacher'
+        WHEN job = 2 THEN 'Lecturer'
+        WHEN job = 3 THEN 'Student Affairs Supervisor'
+        WHEN job = 4 THEN 'Teaching and Research Supervisor'
+        WHEN job = 5 THEN 'Consultant'
+        ELSE 'Other'
+        END) AS job_name,
+        COUNT(*) AS total
+        FROM emp
+        GROUP BY job_name
+        ORDER BY total;
+    </select>
 </mapper>
 

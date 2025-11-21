@@ -2,10 +2,7 @@ package com.realman.SchoolSystem.service.imp;
 
 import com.realman.SchoolSystem.mapper.EmpExprMapper;
 import com.realman.SchoolSystem.mapper.EmpMapper;
-import com.realman.SchoolSystem.pojo.Emp;
-import com.realman.SchoolSystem.pojo.EmpExpr;
-import com.realman.SchoolSystem.pojo.EmpQueryParam;
-import com.realman.SchoolSystem.pojo.PageResult;
+import com.realman.SchoolSystem.pojo.*;
 import com.realman.SchoolSystem.service.EmpService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,4 +97,5 @@ public class EmpServiceImp implements EmpService {
         }
 
     }
+
 }
