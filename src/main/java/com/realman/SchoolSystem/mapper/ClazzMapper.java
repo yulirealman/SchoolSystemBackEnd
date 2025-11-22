@@ -20,4 +20,6 @@ public interface ClazzMapper {
     Clazz getClazzById(Integer id);
 
     void insert(Clazz clazz);
+
+    void update(Clazz clazz);
 }

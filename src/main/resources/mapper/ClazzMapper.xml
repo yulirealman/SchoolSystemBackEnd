@@ -66,4 +66,20 @@
         )
     </insert>
 
+    <update id="update">
+        UPDATE clazz
+        <set>
+            name = #{name},
+            room = #{room},
+            begin_date = #{beginDate},
+            end_date = #{endDate},
+            master_id = #{masterId}
+
+            <if test="subject != null">
+                , subject = #{subject}
+            </if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

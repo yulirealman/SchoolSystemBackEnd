@@ -37,5 +37,12 @@ public class ClazzController {
         Clazz clazz = clazzService.getInfo(id);
         return Result.success(clazz);
     }
+
+    @PutMapping
+    public Result update(@RequestBody Clazz clazz) {
+        log.info("Update clazz {}",clazz);
+        clazzService.update(clazz);
+        return Result.success();
+    }
 }
 
