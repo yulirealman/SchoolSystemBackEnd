@@ -98,4 +98,9 @@ public class EmpServiceImp implements EmpService {
 
     }
 
+    @Override
+    public List<Emp> list() {
+        return empMapper.getAll();
+    }
+
 }

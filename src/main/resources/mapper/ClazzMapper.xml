@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.realman.SchoolSystem.mapper.ClazzMapper">
+
+    <!-- Count query using the same filters -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM clazz c left join emp e on c.master_id = e.id
+        <include refid="clazzFilter"/>
+    </select>
+
+    <!-- Reusable where clause -->
+    <sql id="clazzFilter">
+        <where>
+            <if test="param.name != null and param.name != ''">
+                AND c.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.begin != null">
+                AND c.begin_date &gt;= #{param.begin, jdbcType=DATE}
+            </if>
+            <if test="param.end != null">
+                AND c.end_date &lt;= #{param.end, jdbcType=DATE}
+            </if>
+        </where>
+    </sql>
+    <!-- List query -->
+    <select id="list" resultType="com.realman.SchoolSystem.pojo.Clazz">
+        SELECT c.*, e.name AS master_name
+        FROM clazz c left join emp e on c.master_id = e.id
+        <include refid="clazzFilter"/>
+        limit #{offset}, #{param.pageSize}
+    </select>
+</mapper>

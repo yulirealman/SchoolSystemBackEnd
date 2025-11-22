@@ -35,7 +35,7 @@ public class EmpController {
     }
 
     @DeleteMapping
-    public Result delete(@RequestParam("id") List<Integer> ids) {
+    public Result delete(@RequestParam("ids") List<Integer> ids) {
         log.info("Delete Emp By Id {}", ids);
         empService.delete(ids);
         return Result.success();
@@ -58,5 +58,10 @@ public class EmpController {
     }
 
 
-
+    @GetMapping("/list")
+    public Result list() {
+        log.info("List All Emp");
+        List<Emp> list = empService.list();
+        return Result.success(list);
+    }
 }

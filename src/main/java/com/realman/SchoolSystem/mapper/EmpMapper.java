@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface EmpMapper {
@@ -27,4 +28,8 @@ public interface EmpMapper {
     void updateById(Emp emp);
 
     List<JobStatics> countEmpJobData();
+
+    List<Map<String, Object>> countEmpGenderData();
+
+    List<Emp> getAll();
 }

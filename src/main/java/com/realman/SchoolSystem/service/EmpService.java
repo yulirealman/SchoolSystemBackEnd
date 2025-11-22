@@ -18,4 +18,5 @@ public interface EmpService {
 
     void update(Emp emp);
 
+    List<Emp> list();
 }
