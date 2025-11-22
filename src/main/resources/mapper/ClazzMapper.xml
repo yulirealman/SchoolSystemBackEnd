@@ -38,4 +38,32 @@
         FROM clazz
         WHERE id = #{id}
     </select>
+
+    <insert id="insert">
+        INSERT INTO clazz (
+        name,
+        room,
+        begin_date,
+        end_date,
+        subject,
+        create_time,
+        update_time
+        <if test="masterId != null">
+            , master_id
+        </if>
+        )
+        VALUES (
+        #{name},
+        #{room},
+        #{beginDate},
+        #{endDate},
+        #{subject},
+        #{createTime},
+        #{updateTime}
+        <if test="masterId != null">
+            , #{masterId}
+        </if>
+        )
+    </insert>
+
 </mapper>

@@ -18,4 +18,6 @@ public interface ClazzMapper {
                    @Param("offset") Integer offset);
 
     Clazz getClazzById(Integer id);
+
+    void insert(Clazz clazz);
 }

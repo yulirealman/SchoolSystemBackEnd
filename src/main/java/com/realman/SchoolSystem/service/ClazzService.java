@@ -13,4 +13,6 @@ public interface ClazzService {
     PageResult<Clazz> page(ClazzQueryParam param);
 
     Clazz getInfo(Integer id);
+
+    void save(Clazz clazz);
 }

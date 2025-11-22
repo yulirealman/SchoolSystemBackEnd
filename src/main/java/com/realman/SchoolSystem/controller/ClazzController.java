@@ -23,6 +23,14 @@ public class ClazzController {
         return Result.success(pageResult);
     }
 
+    //finish 2.3 then 2.5
+    @PostMapping
+    public Result save(@RequestBody Clazz clazz) {
+        log.info("Save clazz {}",clazz);
+        clazzService.save(clazz);
+        return Result.success();
+    }
+
     @GetMapping("/{id}")
     public Result getInfo(@PathVariable("id") Integer id) {
         log.info("Get clazz {}",id);
