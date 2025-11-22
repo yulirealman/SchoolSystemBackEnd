@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public Result handleException(Exception e) {
         log.error("Exception: {}", e.getMessage());
-        return Result.error("Something Wrong");
+        return Result.error("出现问题");
     }
     @ExceptionHandler
     public Result handleDuplicateKeyException(DuplicateKeyException e){
@@ -22,6 +22,13 @@ public class GlobalExceptionHandler {
         int i= message.indexOf("Duplicate entry");
         String errMsg = message.substring(i);
         String[] arr =errMsg.split( " ");
-        return Result.error( arr[2]+"already exist");
+        return Result.error( arr[2]+" 已存在");
     }
+
+    @ExceptionHandler(ClassHasStudentsException.class)
+    public Result handleClassHasStudentsException(ClassHasStudentsException e) {
+        log.error("Business rule violation: {}", e.getMessage());
+        return Result.error(e.getMessage());
+    }
+
 }

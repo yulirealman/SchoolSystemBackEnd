@@ -17,4 +17,6 @@ public interface ClazzService {
     void save(Clazz clazz);
 
     void update(Clazz clazz);
+
+    void deleteById(Integer id);
 }
