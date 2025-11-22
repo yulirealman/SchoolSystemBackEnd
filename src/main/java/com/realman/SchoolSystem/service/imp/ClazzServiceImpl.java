@@ -39,4 +39,9 @@ public class ClazzServiceImpl implements ClazzService {
 
         return new PageResult<Clazz>(total,rows);
     }
+
+    @Override
+    public Clazz getInfo(Integer id) {
+       return clazzMapper.getClazzById( id);
+    }
 }

@@ -25,7 +25,6 @@ public class Clazz {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
     private Integer masterId;
-    @JsonIgnore
     private Integer subject;
     private String masterName;
     private String status;

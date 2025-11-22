@@ -32,4 +32,10 @@
         <include refid="clazzFilter"/>
         limit #{offset}, #{param.pageSize}
     </select>
+
+    <select id="getClazzById" resultType="com.realman.SchoolSystem.pojo.Clazz">
+        SELECT *
+        FROM clazz
+        WHERE id = #{id}
+    </select>
 </mapper>

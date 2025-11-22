@@ -17,4 +17,5 @@ public interface ClazzMapper {
     List<Clazz> list(@Param("param") ClazzQueryParam param,
                    @Param("offset") Integer offset);
 
+    Clazz getClazzById(Integer id);
 }
