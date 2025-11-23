@@ -35,4 +35,9 @@ public class StudentServiceImp implements StudentService {
         student.setUpdateTime(LocalDateTime.now());
         studentMapper.insert(student);
     }
+
+    @Override
+    public Student getById(Integer id) {
+        return studentMapper.getById(id);
+    }
 }

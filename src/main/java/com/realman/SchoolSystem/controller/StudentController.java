@@ -29,4 +29,11 @@ public class StudentController {
         studentService.save(student);
         return Result.success();
     }
+
+    @GetMapping("/{id}")
+    public Result getById(@PathVariable Integer id) {
+        log.info("Get student {}",id);
+        Student student = studentService.getById(id);
+        return Result.success(student);
+    }
 }

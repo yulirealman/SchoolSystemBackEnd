@@ -18,4 +18,6 @@ public interface StudentMapper {
                        @Param("offset") Integer offset);
 
     void insert(Student student);
+
+    Student getById(Integer id);
 }

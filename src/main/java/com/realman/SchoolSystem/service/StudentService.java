@@ -9,4 +9,6 @@ public interface StudentService {
     PageResult<Student> page(StudentQueryParam param);
 
     void save(Student student);
+
+    Student getById(Integer id);
 }

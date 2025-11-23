@@ -78,6 +78,8 @@
         </trim>
     </insert>
 
-
+    <select id="getById" resultType="com.realman.SchoolSystem.pojo.Student">
+        SELECT * FROM student WHERE id = #{id}
+    </select>
 
 </mapper>
