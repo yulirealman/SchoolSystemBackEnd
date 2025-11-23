@@ -11,4 +11,6 @@ public interface StudentService {
     void save(Student student);
 
     Student getById(Integer id);
+
+    void update(Student student);
 }

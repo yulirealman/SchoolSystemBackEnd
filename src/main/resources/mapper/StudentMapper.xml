@@ -82,4 +82,23 @@
         SELECT * FROM student WHERE id = #{id}
     </select>
 
+    <update id="update">
+        UPDATE student
+        <set>
+            name = #{name},           <!-- required -->
+            no = #{no},               <!-- required -->
+            phone = #{phone},         <!-- required -->
+            gender = #{gender},       <!-- required -->
+            id_card = #{idCard},      <!-- required -->
+            is_college = #{isCollege},<!-- required -->
+            clazz_id = #{clazzId},    <!-- required -->
+            violation_count = #{violationCount},
+            violation_score = #{violationScore},
+            update_time = #{updateTime}
+            <if test="address != null">, address = #{address}</if>
+            <if test="degree != null">, degree = #{degree}</if>
+            <if test="graduationDate != null">, graduation_date = #{graduationDate}</if>
+        </set>
+        WHERE id = #{id}  <!-- required -->
+    </update>
 </mapper>

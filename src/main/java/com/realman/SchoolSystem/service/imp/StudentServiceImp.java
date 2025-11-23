@@ -40,4 +40,10 @@ public class StudentServiceImp implements StudentService {
     public Student getById(Integer id) {
         return studentMapper.getById(id);
     }
+
+    @Override
+    public void update(Student student) {
+        student.setUpdateTime(LocalDateTime.now());
+        studentMapper.update(student);
+    }
 }
