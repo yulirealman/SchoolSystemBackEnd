@@ -101,4 +101,29 @@
         </set>
         WHERE id = #{id}  <!-- required -->
     </update>
+
+    <delete id="deleteByIds">
+        DELETE FROM student WHERE id IN
+        <foreach item="id" collection="ids" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <update id="updateViolation">
+        UPDATE student
+        SET violation_score = violation_score + #{score},
+        violation_count = violation_count + 1
+        WHERE id = #{id}
+    </update>
+
+    <select id="countStudentData" resultType="java.util.Map">
+        SELECT
+        c.name AS clazzList,
+        COUNT(s.id) AS dataList
+        FROM clazz c
+        LEFT JOIN student s ON c.id = s.clazz_id
+        GROUP BY c.name
+    </select>
+
+
 </mapper>

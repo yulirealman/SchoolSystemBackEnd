@@ -33,4 +33,11 @@ public class ReportController {
        List<Map<String,Object>> empGenderData = reportService.getEmpGenderData();
        return Result.success(empGenderData);
     }
+
+    @GetMapping("studentCountData")
+    public Result getStudentCountData() {
+       log.info("Get Student Count Data");
+        Map<String, Object> studentCountData = reportService.getStudentCountData();
+       return Result.success(studentCountData);
+    }
 }
