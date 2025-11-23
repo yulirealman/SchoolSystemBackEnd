@@ -30,4 +30,6 @@ public interface StudentMapper {
     void updateViolation(Integer id, Short score);
 
     List<Map<String, Object>> countStudentData();
+
+    List<Map<String, Object>> countStudentDegreeData();
 }
