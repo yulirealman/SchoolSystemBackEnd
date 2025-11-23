@@ -2,8 +2,6 @@ package com.realman.SchoolSystem.mapper;
 
 import com.realman.SchoolSystem.pojo.Clazz;
 import com.realman.SchoolSystem.pojo.ClazzQueryParam;
-import com.realman.SchoolSystem.pojo.Emp;
-import com.realman.SchoolSystem.pojo.EmpQueryParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -24,4 +22,6 @@ public interface ClazzMapper {
     void update(Clazz clazz);
 
     void deleteById(Integer id);
+
+    List<Clazz> getAll();
 }

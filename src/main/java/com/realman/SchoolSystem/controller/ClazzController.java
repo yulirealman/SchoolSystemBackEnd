@@ -51,5 +51,11 @@ public class ClazzController {
         clazzService.deleteById(id);
         return Result.success();
     }
+
+    @GetMapping("/list")
+    public Result list() {
+        log.info("Get list of clazzs");
+        return Result.success(clazzService.list());
+    }
 }
 

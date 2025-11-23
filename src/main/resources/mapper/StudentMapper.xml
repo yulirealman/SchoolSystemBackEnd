@@ -8,4 +8,39 @@
             FROM student
             WHERE clazz_id = #{clazzId}
     </select>
+
+
+
+    <!-- Reusable where clause -->
+    <sql id="studentFilter">
+        <where>
+            <if test="param.name != null and param.name != ''">
+                AND s.name LIKE CONCAT('%', #{param.name}, '%')
+            </if>
+            <if test="param.degree != null and param.name != ''" >
+                AND s.degree = #{param.degree}
+            </if>
+            <if test="param.clazzId != null">
+                AND s.clazz_id = #{param.clazzId}
+            </if>
+
+        </where>
+    </sql>
+
+    <!-- Count query using the same filters -->
+    <select id="count" resultType="java.lang.Long">
+        SELECT count(*)
+        FROM student s left join clazz c on s.clazz_id = c.id
+        <include refid="studentFilter"/>
+    </select>
+
+
+
+    <!-- List query -->
+    <select id="list" resultType="com.realman.SchoolSystem.pojo.Student">
+        SELECT s.*, c.name as clazz_name
+        FROM student s left join clazz c on s.clazz_id = c.id
+        <include refid="studentFilter"/>
+        limit #{offset}, #{param.pageSize}
+    </select>
 </mapper>
