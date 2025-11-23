@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface StudentService {
     PageResult<Student> page(StudentQueryParam param);
+
+    void save(Student student);
 }

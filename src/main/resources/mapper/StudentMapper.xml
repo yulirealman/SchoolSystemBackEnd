@@ -43,4 +43,41 @@
         <include refid="studentFilter"/>
         limit #{offset}, #{param.pageSize}
     </select>
+
+<!--    potential problem:-->
+    <insert id="insert">
+        INSERT INTO student
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            name,
+            no,
+            gender,
+            phone,
+            id_card,
+            is_college,
+            clazz_id,
+            <if test="address != null">address,</if>
+            <if test="degree != null">degree,</if>
+            <if test="graduationDate != null">graduation_date,</if>
+            create_time,
+            update_time
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{name},
+            #{no},
+            #{gender},
+            #{phone},
+            #{idCard},
+            #{isCollege},
+            #{clazzId},
+            <if test="address != null">#{address},</if>
+            <if test="degree != null">#{degree},</if>
+            <if test="graduationDate != null">#{graduationDate},</if>
+            #{createTime},
+            #{updateTime}
+        </trim>
+    </insert>
+
+
+
 </mapper>

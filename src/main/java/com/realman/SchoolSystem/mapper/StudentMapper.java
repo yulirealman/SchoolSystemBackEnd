@@ -16,4 +16,6 @@ public interface StudentMapper {
 
     List<Student> list(@Param("param")StudentQueryParam param,
                        @Param("offset") Integer offset);
+
+    void insert(Student student);
 }
