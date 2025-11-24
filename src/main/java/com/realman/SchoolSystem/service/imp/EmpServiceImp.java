@@ -4,16 +4,17 @@ import com.realman.SchoolSystem.mapper.EmpExprMapper;
 import com.realman.SchoolSystem.mapper.EmpMapper;
 import com.realman.SchoolSystem.pojo.*;
 import com.realman.SchoolSystem.service.EmpService;
+import com.realman.SchoolSystem.utils.JwtUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
+@Slf4j
 @Service
 public class EmpServiceImp implements EmpService {
 
@@ -101,6 +102,23 @@ public class EmpServiceImp implements EmpService {
     @Override
     public List<Emp> list() {
         return empMapper.getAll();
+    }
+
+    @Override
+    public LoginInfo login(Emp emp) {
+        Emp result = empMapper.selectByUsernameAndPassword(emp);
+
+        if(result != null){
+            log.info("login success ,{}",result);
+            log.info("generate token");
+            Map<String,Object> claims = new HashMap<>();
+            claims.put("id",result.getId());
+            claims.put("username",result.getUsername());
+            String token = JwtUtils.generateToken(claims);
+            return new LoginInfo(result.getId(),result.getUsername(),result.getName(),token);
+        }
+
+        return null;
     }
 
 }

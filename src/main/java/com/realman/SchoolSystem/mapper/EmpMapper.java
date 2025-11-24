@@ -6,6 +6,7 @@ import com.realman.SchoolSystem.pojo.JobOption;
 import com.realman.SchoolSystem.pojo.JobStatics;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -32,4 +33,6 @@ public interface EmpMapper {
     List<Map<String, Object>> countEmpGenderData();
 
     List<Emp> getAll();
+
+    Emp selectByUsernameAndPassword(Emp emp);
 }
