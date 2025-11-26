@@ -10,7 +10,7 @@ public interface DeptService {
 
     void deleteById(Integer id);
 
-    void insert(Dept dept);
+    void save(Dept dept);
 
     Dept getById(Integer id);
 

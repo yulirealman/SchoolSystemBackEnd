@@ -29,14 +29,14 @@ public class DeptServiceImp implements DeptService {
     }
 
     @Override
-    public void insert(Dept dept) {
+    public void save(Dept dept) {
         //by default post request will not have createTime and updateTime
         //so we fill it up at service layer
         if(dept !=null){
             dept.setCreateTime(LocalDateTime.now());
             dept.setUpdateTime(LocalDateTime.now());
         }
-        deptMapper.insert(dept);
+        deptMapper.save(dept);
     }
 
     @Override

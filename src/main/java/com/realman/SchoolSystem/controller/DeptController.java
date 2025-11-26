@@ -3,7 +3,6 @@ package com.realman.SchoolSystem.controller;
 import com.realman.SchoolSystem.pojo.Dept;
 import com.realman.SchoolSystem.pojo.Result;
 import com.realman.SchoolSystem.service.DeptService;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,11 +40,11 @@ public class DeptController {
 
 
     @PostMapping
-    public Result insert(@RequestBody Dept dept) {
+    public Result save(@RequestBody Dept dept) {
         //use request body instead of request param at post or put request
 
         log.info("Add Department {}", dept);
-        deptService.insert(dept);
+        deptService.save(dept);
         return Result.success();
     }
 

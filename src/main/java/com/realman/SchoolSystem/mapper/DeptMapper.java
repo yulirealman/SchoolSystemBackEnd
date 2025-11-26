@@ -19,7 +19,7 @@ public interface DeptMapper {
     void deleteById(Integer id);
 
     @Insert("insert into dept(name, create_time, update_time) values(#{name}, #{createTime}, #{updateTime})")
-    void insert(Dept dept);
+    void save(Dept dept);
 
     @Update("update dept set name = #{name}, update_time = #{updateTime} where id = #{id}")
     void update(Dept dept);
