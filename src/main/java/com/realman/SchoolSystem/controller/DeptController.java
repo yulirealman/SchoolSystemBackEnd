@@ -1,5 +1,6 @@
 package com.realman.SchoolSystem.controller;
 
+import com.realman.SchoolSystem.anno.Log;
 import com.realman.SchoolSystem.pojo.Dept;
 import com.realman.SchoolSystem.pojo.Result;
 import com.realman.SchoolSystem.service.DeptService;
@@ -31,6 +32,7 @@ public class DeptController {
 
 
     @DeleteMapping
+    @Log
     public Result delete(@RequestParam("id") Integer id) {
 
         log.info("Delete Department By ID {}", id);
@@ -40,6 +42,7 @@ public class DeptController {
 
 
     @PostMapping
+    @Log
     public Result save(@RequestBody Dept dept) {
         //use request body instead of request param at post or put request
 
@@ -58,6 +61,7 @@ public class DeptController {
     }
 
     @PutMapping
+    @Log
     public Result update(@RequestBody Dept dept) {
 
         log.info("Update Department {}",dept);

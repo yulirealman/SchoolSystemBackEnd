@@ -1,6 +1,8 @@
 package com.realman.SchoolSystem.interceptor;
 
+import com.realman.SchoolSystem.utils.CurrentHolder;
 import com.realman.SchoolSystem.utils.JwtUtils;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
@@ -29,7 +31,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         //if token exsits we need to check if it's valid
         try{
-            JwtUtils.parseToken(token);
+            Claims claims = JwtUtils.parseToken(token);
+
+            CurrentHolder.setCurrentId(claims.get("id", Integer.class));
+
         } catch (Exception e){
             response.setStatus(401);
             return false;

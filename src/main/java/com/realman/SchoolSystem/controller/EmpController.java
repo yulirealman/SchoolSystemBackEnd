@@ -1,5 +1,6 @@
 package com.realman.SchoolSystem.controller;
 
+import com.realman.SchoolSystem.anno.Log;
 import com.realman.SchoolSystem.pojo.Emp;
 import com.realman.SchoolSystem.pojo.EmpQueryParam;
 import com.realman.SchoolSystem.pojo.PageResult;
@@ -28,6 +29,7 @@ public class EmpController {
     }
 
     @PostMapping
+    @Log
     public Result save(@RequestBody Emp emp) {
         log.info("Save Emp {}",emp);
         empService.save(emp);
@@ -35,6 +37,7 @@ public class EmpController {
     }
 
     @DeleteMapping
+    @Log
     public Result delete(@RequestParam("ids") List<Integer> ids) {
         log.info("Delete Emp By Id {}", ids);
         empService.delete(ids);
@@ -50,6 +53,7 @@ public class EmpController {
 
 
     @PutMapping
+    @Log
     public Result update(@RequestBody Emp emp) {
         log.info("Update Emp {}", emp);
 

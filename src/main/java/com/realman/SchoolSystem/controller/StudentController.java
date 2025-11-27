@@ -1,5 +1,6 @@
 package com.realman.SchoolSystem.controller;
 
+import com.realman.SchoolSystem.anno.Log;
 import com.realman.SchoolSystem.pojo.PageResult;
 import com.realman.SchoolSystem.pojo.Result;
 import com.realman.SchoolSystem.pojo.Student;
@@ -26,6 +27,7 @@ public class StudentController {
     }
 
     @PostMapping
+    @Log
     public Result save(@RequestBody Student student) {
         log.info("Save student {}",student);
         studentService.save(student);
@@ -40,6 +42,7 @@ public class StudentController {
     }
 
     @PutMapping
+    @Log
     public Result update(@RequestBody Student student) {
         log.info("Update student {}",student);
         studentService.update(student);
@@ -47,6 +50,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{ids}")
+    @Log
     public Result delete(@PathVariable  List<Integer> ids) {
         log.info("Delete student {}",ids);
         studentService.delete(ids);

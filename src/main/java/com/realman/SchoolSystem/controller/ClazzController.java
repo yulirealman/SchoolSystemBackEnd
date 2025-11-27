@@ -1,5 +1,6 @@
 package com.realman.SchoolSystem.controller;
 
+import com.realman.SchoolSystem.anno.Log;
 import com.realman.SchoolSystem.pojo.*;
 import com.realman.SchoolSystem.service.ClazzService;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +26,7 @@ public class ClazzController {
 
     //finish 2.3 then 2.5
     @PostMapping
+    @Log
     public Result save(@RequestBody Clazz clazz) {
         log.info("Save clazz {}",clazz);
         clazzService.save(clazz);
@@ -39,6 +41,7 @@ public class ClazzController {
     }
 
     @PutMapping
+    @Log
     public Result update(@RequestBody Clazz clazz) {
         log.info("Update clazz {}",clazz);
         clazzService.update(clazz);
@@ -46,6 +49,7 @@ public class ClazzController {
     }
 
     @DeleteMapping("/{id}")
+    @Log
     public Result delete(@PathVariable("id") Integer id){
         log.info("Delete clazz {}",id);
         clazzService.deleteById(id);
