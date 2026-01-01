@@ -11,37 +11,48 @@
 
 
 
-    <!-- Reusable where clause -->
+    <!-- Reusable where conditions (no <where> tag here) -->
     <sql id="studentFilter">
-        <where>
-            <if test="param.name != null and param.name != ''">
-                AND s.name LIKE CONCAT('%', #{param.name}, '%')
-            </if>
-            <if test="param.degree != null and param.name != ''" >
-                AND s.degree = #{param.degree}
-            </if>
-            <if test="param.clazzId != null">
-                AND s.clazz_id = #{param.clazzId}
-            </if>
-
-        </where>
+        <if test="param.name != null and param.name != ''">
+            AND s.name LIKE CONCAT('%', #{param.name}, '%')
+        </if>
+        <if test="param.degree != null and param.degree != ''">
+            AND s.degree = #{param.degree}
+        </if>
     </sql>
 
     <!-- Count query using the same filters -->
-    <select id="count" resultType="java.lang.Long">
+    <select id="count" resultType="java.lang.Long" parameterType="map">
         SELECT count(*)
-        FROM student s left join clazz c on s.clazz_id = c.id
-        <include refid="studentFilter"/>
+        FROM student s
+        <if test="param.clazzId != null and param.clazzId != ''">
+            LEFT JOIN clazz c ON s.clazz_id = c.id
+        </if>
+        <where>
+            <if test="param.clazzId != null and param.clazzId != ''">
+                s.clazz_id = #{param.clazzId}
+            </if>
+            <include refid="studentFilter"/>
+        </where>
     </select>
 
-
-
     <!-- List query -->
-    <select id="list" resultType="com.realman.SchoolSystem.pojo.Student">
-        SELECT s.*, c.name as clazz_name
-        FROM student s left join clazz c on s.clazz_id = c.id
-        <include refid="studentFilter"/>
-        limit #{offset}, #{param.pageSize}
+    <select id="list" resultType="com.realman.SchoolSystem.pojo.Student" parameterType="map">
+        SELECT s.*
+        <if test="param.clazzId != null and param.clazzId != ''">
+            , c.name AS clazz_name
+        </if>
+        FROM student s
+        <if test="param.clazzId != null and param.clazzId != ''">
+            LEFT JOIN clazz c ON s.clazz_id = c.id
+        </if>
+        <where>
+            <if test="param.clazzId != null and param.clazzId != ''">
+                s.clazz_id = #{param.clazzId}
+            </if>
+            <include refid="studentFilter"/>
+        </where>
+        LIMIT #{offset}, #{param.pageSize}
     </select>
 
 <!--    potential problem:-->
