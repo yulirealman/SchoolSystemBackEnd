@@ -50,6 +50,7 @@
             </if>
             <include refid="studentFilter"/>
         </where>
+        ORDER BY s.update_time DESC
         LIMIT #{offset}, #{param.pageSize}
     </select>
 
