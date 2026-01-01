@@ -38,14 +38,12 @@
 
     <!-- List query -->
     <select id="list" resultType="com.realman.SchoolSystem.pojo.Student" parameterType="map">
-        SELECT s.*
-        <if test="param.clazzId != null and param.clazzId != ''">
-            , c.name AS clazz_name
-        </if>
+        SELECT s.* , c.name AS clazz_name
+
         FROM student s
-        <if test="param.clazzId != null and param.clazzId != ''">
-            LEFT JOIN clazz c ON s.clazz_id = c.id
-        </if>
+
+        LEFT JOIN clazz c ON s.clazz_id = c.id
+
         <where>
             <if test="param.clazzId != null and param.clazzId != ''">
                 s.clazz_id = #{param.clazzId}
