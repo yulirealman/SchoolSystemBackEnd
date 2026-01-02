@@ -38,7 +38,8 @@ public class EmpServiceImp implements EmpService {
     @Transactional(rollbackFor = {Exception.class}) //use transaction when involve multiple  tables
     @Override
     public void save(Emp emp) {
-
+        if(emp.getImage()== null || emp.getImage().equals( "")){
+            emp.setImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFly7kLA15avfhCDN6_NHQIYwbVZG9muLziycroyu-Hw&s");}
         emp.setCreateTime(LocalDateTime.now());
         emp.setUpdateTime(LocalDateTime.now());
         empMapper.insert(emp);

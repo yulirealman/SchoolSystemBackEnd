@@ -14,13 +14,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-//        String requestURI = request.getRequestURI(); // ie. /api/dept/1
-//
-//        //we don't block /login, because it needs login to have token
-//        if(requestURI.contains("/login")){
-//            return true;
-//        }
-
         String token = request.getHeader("token");
 
         //if token is null or empty, return 401
