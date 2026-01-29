@@ -19,7 +19,7 @@ public interface OperateLogMapper {
 
 
 
-    @Select("SELECT o.*, e.name As operate_emp_name FROM operate_log o LEFT JOIN emp e ON e.id = o.operate_emp_id LIMIT #{offset}, #{pageSize}")
+    @Select("SELECT o.*, e.name As operate_emp_name FROM operate_log o LEFT JOIN emp e ON e.id = o.operate_emp_id ORDER BY operate_time DESC LIMIT #{offset}, #{pageSize} ")
     List<OperateLog> list(Integer offset, Integer pageSize);
 
     @Select("SELECT count(*) FROM operate_log")
