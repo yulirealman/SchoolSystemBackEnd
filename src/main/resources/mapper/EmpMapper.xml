@@ -149,16 +149,24 @@
         GROUP BY job_name
         ORDER BY total;
     </select>
+<!--    <select id="countEmpGenderData" resultType="java.util.Map">-->
+<!--        SELECT-->
+<!--        (CASE-->
+<!--        WHEN gender = 1 THEN '男'-->
+<!--        WHEN gender = 2 THEN '女'-->
+<!--        END) AS name,-->
+<!--        COUNT(*) AS value-->
+<!--        FROM emp-->
+<!--        GROUP BY gender-->
+<!--        ORDER BY name desc;-->
+<!--    </select>-->
     <select id="countEmpGenderData" resultType="java.util.Map">
         SELECT
-        (CASE
-        WHEN gender = 1 THEN '男'
-        WHEN gender = 2 THEN '女'
-        END) AS name,
+        gender AS name,
         COUNT(*) AS value
         FROM emp
         GROUP BY gender
-        ORDER BY name desc;
+        ORDER BY gender DESC
     </select>
 
 
