@@ -135,18 +135,26 @@
         GROUP BY c.name
     </select>
 
+<!--    <select id="countStudentDegreeData" resultType="java.util.Map">-->
+<!--            SELECT-->
+<!--            CASE degree-->
+<!--            WHEN 1 THEN '初中'-->
+<!--            WHEN 2 THEN '高中'-->
+<!--            WHEN 3 THEN '大专'-->
+<!--            WHEN 4 THEN '本科'-->
+<!--            WHEN 5 THEN '硕士'-->
+<!--            WHEN 6 THEN '博士'-->
+<!--            END AS name,-->
+<!--            COUNT(*) AS value-->
+<!--            FROM student-->
+<!--            GROUP BY degree-->
+<!--    </select>-->
     <select id="countStudentDegreeData" resultType="java.util.Map">
-            SELECT
-            CASE degree
-            WHEN 1 THEN '初中'
-            WHEN 2 THEN '高中'
-            WHEN 3 THEN '大专'
-            WHEN 4 THEN '本科'
-            WHEN 5 THEN '硕士'
-            WHEN 6 THEN '博士'
-            END AS name,
-            COUNT(*) AS value
-            FROM student
-            GROUP BY degree
+        SELECT
+        degree AS name,
+        COUNT(*) AS value
+        FROM student
+        GROUP BY degree
     </select>
+
 </mapper>
