@@ -1,70 +1,41 @@
-name: CI + Docker + Deploy (Java 25)
-
-on:
-  push:
-    branches: [ "main", "master" ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-
-    steps:
-      # 1. 拉代码
-      - uses: actions/checkout@v4
-
-      # 2. Java 25
-      - name: Set up JDK 25
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '25'
-          cache: maven
-
-      # 3. Maven 打包（跳测试）
-      - name: Build jar
-        run: mvn clean package -DskipTests
-
-      - name: Verify jar contents
-        run: |
-          jar tf target/*.jar | grep Mapper || (echo "Mapper XML missing!" && exit 1)
-
-      # 4. 构建 Docker 镜像
-      - name: Build Docker image
-        run: docker build -t schoolsystem:latest .
-
-      # 5. 导出镜像为 tar.gz
-      - name: Save Docker image
-        run: docker save schoolsystem:latest | gzip > schoolsystem.tar.gz
-
-      # 6. 拷贝到服务器（固定路径，避免变量坑）
-      - name: Copy image to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          source: "schoolsystem.tar.gz"
-          target: "/tmp/"
-
-      # 7. SSH 部署
-      - name: Deploy on server
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker load < /tmp/schoolsystem.tar.gz
-            docker stop schoolsystem || true
-            docker rm schoolsystem || true
-            docker run -d --name schoolsystem \
-            --network mynetwork \
-            -p 8080:8080 \
-            --restart unless-stopped \
-            -e "SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DB}?useSSL=false&serverTimezone=UTC" \
-            -e "SPRING_DATASOURCE_USERNAME=${MYSQL_USER}" \
-            -e "SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}" \
-            schoolsystem:latest
-
-
-
+#name: CI/CD Deploy
+#
+#on:
+#  push:
+#    branches:
+#      - main  # 你想自动部署的分支
+#
+#jobs:
+#  build-and-deploy:
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v3
+#
+#      - name: Set up Docker Buildx
+#        uses: docker/setup-buildx-action@v2
+#
+#      - name: Login to DockerHub
+#        uses: docker/login-action@v2
+#        with:
+#          username: ${{ secrets.DOCKER_USERNAME }}
+#          password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#      - name: Build Docker image
+#        run: docker build -t yourdockerhubusername/schoolsystem:latest .
+#
+#      - name: Push Docker image
+#        run: docker push yourdockerhubusername/schoolsystem:latest
+#
+#      - name: SSH and deploy
+#        uses: appleboy/ssh-action@v0.1.7
+#        with:
+#          host: ${{ secrets.SERVER_IP }}
+#          username: ${{ secrets.SERVER_USER }}
+#          key: ${{ secrets.SERVER_SSH_KEY }}
+#          script: |
+#            docker pull yourdockerhubusername/schoolsystem:latest
+#            docker stop schoolsystem-server || true
+#            docker rm schoolsystem-server || true
+#            docker run -d --name schoolsystem-server -p 8080:8080 --network mynetwork yourdockerhubusername/schoolsystem:latest
