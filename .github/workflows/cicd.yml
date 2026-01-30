@@ -55,6 +55,7 @@ jobs:
             docker rm schoolsystem || true
             docker run -d \
               --name schoolsystem \
+              --network schools-net \
               -p 8080:8080 \
               --restart unless-stopped \
               schoolsystem:latest
