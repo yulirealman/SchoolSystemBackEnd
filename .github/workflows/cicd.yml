@@ -1,11 +1,11 @@
-name: Java Maven CI (Java 25)
+name: CI + Deploy to Server
 
 on:
   push:
     branches: [ "main", "master" ]
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,36 @@ jobs:
           java-version: '25'
           cache: maven
 
-      - name: Build with Maven (skip tests)
+      - name: Build jar
         run: mvn clean package -DskipTests
+
+      - name: Build Docker image
+        run: docker build -t schoolsystem:latest .
+
+      - name: Save Docker image
+        run: docker save schoolsystem:latest | gzip > schoolsystem.tar.gz
+
+      - name: Copy image to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "schoolsystem.tar.gz"
+          target: "/home/${{ secrets.SERVER_USER }}/"
+
+      - name: Deploy on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            docker load < ~/schoolsystem.tar.gz
+            docker stop schoolsystem || true
+            docker rm schoolsystem || true
+            docker run -d \
+              --name schoolsystem \
+              -p 8080:8080 \
+              --restart unless-stopped \
+              schoolsystem:latest
