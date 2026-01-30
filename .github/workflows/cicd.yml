@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ 设置 JDK 25（Maven 需要）
+      # 2️⃣ 设置 JDK 25（Maven 编译用）
       - name: Set up JDK 25
         uses: actions/setup-java@v3
         with:
@@ -32,16 +32,27 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 4️⃣ 构建 Docker 镜像
-      - name: Build Docker image
+      # 4️⃣ 准备 Docker 构建目录
+      - name: Prepare Docker build context
         run: |
-          docker build -t $IMAGE_NAME:$IMAGE_TAG ./schoolsystem
+          mkdir -p schoolsystem
+          cp target/*.jar schoolsystem/app.jar
+          cp Dockerfile schoolsystem/
 
-      # 5️⃣ 停掉旧容器并启动新容器，注入数据库 Secrets
+      # 5️⃣ 构建 Docker 镜像
+      - name: Build Docker image
+        run: docker build -t $IMAGE_NAME:$IMAGE_TAG ./schoolsystem
+
+      # 6️⃣ 停掉旧容器并启动新容器
       - name: Deploy Docker container
         run: |
+          # 创建网络（如果不存在）
           docker network inspect $NETWORK >/dev/null 2>&1 || docker network create $NETWORK
+
+          # 删除旧容器（如果存在）
           docker rm -f $CONTAINER_NAME || true
+
+          # 运行新容器
           docker run -d \
             --name $CONTAINER_NAME \
             -p $PORT:$PORT \
@@ -49,4 +60,6 @@ jobs:
             -e MYSQL_USER=${{ secrets.MYSQL_USER }} \
             -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
             $IMAGE_NAME:$IMAGE_TAG
+
+          # 查看容器日志
           docker logs -f $CONTAINER_NAME
