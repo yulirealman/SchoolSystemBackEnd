@@ -32,7 +32,7 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 4️⃣ 准备 Docker 构建目录
+      # 4️⃣ 准备 Docker 构建上下文
       - name: Prepare Docker build context
         run: |
           mkdir -p schoolsystem
@@ -52,7 +52,7 @@ jobs:
           # 删除旧容器（如果存在）
           docker rm -f $CONTAINER_NAME || true
 
-          # 运行新容器
+          # 运行新容器，注入数据库 Secrets
           docker run -d \
             --name $CONTAINER_NAME \
             -p $PORT:$PORT \
