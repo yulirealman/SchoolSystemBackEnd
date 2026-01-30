@@ -58,8 +58,9 @@ jobs:
               --network mynetwork \
               -p 8080:8080 \
               --restart unless-stopped \
-              -e SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/schoolsystem?useSSL=false&serverTimezone=UTC \
-              -e SPRING_DATASOURCE_USERNAME=root \
-              -e SPRING_DATASOURCE_PASSWORD=123456 \
+              -e SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_HOST }}:3306/${{ secrets.MYSQL_DB }}?useSSL=false&serverTimezone=UTC \
+              -e SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }} \
+              -e SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
               schoolsystem:latest
+
 
