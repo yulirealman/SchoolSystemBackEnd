@@ -6,6 +6,7 @@ spring:
     url: jdbc:mysql://mysql:3306/schoolsystem
 #    username: root
 #    password: 123456
+
     username: ${MYSQL_USER}
     password: ${MYSQL_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
