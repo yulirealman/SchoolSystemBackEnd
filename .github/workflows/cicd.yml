@@ -53,14 +53,14 @@ jobs:
             docker load < /tmp/schoolsystem.tar.gz
             docker stop schoolsystem || true
             docker rm schoolsystem || true
-            docker run -d \
-              --name schoolsystem \
-              --network mynetwork \
-              -p 8080:8080 \
-              --restart unless-stopped \
-              -e SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_HOST }}:3306/${{ secrets.MYSQL_DB }}?useSSL=false&serverTimezone=UTC \
-              -e SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }} \
-              -e SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
-              schoolsystem:latest
+            docker run -d --name schoolsystem \
+            --network mynetwork \
+            -p 8080:8080 \
+            --restart unless-stopped \
+            -e "SPRING_DATASOURCE_URL=jdbc:mysql://${MYSQL_HOST}:3306/${MYSQL_DB}?useSSL=false&serverTimezone=UTC" \
+            -e "SPRING_DATASOURCE_USERNAME=${MYSQL_USER}" \
+            -e "SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}" \
+            schoolsystem:latest
+
 
 
