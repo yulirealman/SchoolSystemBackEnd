@@ -17,30 +17,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 拉代码
+      # 1️⃣ 拉代码
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2. 设置 JDK 25
+      # 2️⃣ 设置 JDK 25（Maven 需要）
       - name: Set up JDK 25
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: 25
 
-      # 3. Maven 打包
+      # 3️⃣ Maven 打包
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 4. 构建 Docker 镜像
+      # 4️⃣ 构建 Docker 镜像
       - name: Build Docker image
         run: |
-          mkdir -p schoolsystem
-          cp target/*.jar schoolsystem/app.jar
-          cp Dockerfile schoolsystem/
-          docker build -t $IMAGE_NAME:$IMAGE_TAG schoolsystem
+          docker build -t $IMAGE_NAME:$IMAGE_TAG ./schoolsystem
 
-      # 5. 停掉旧容器并启动新容器，注入数据库 Secrets
+      # 5️⃣ 停掉旧容器并启动新容器，注入数据库 Secrets
       - name: Deploy Docker container
         run: |
           docker network inspect $NETWORK >/dev/null 2>&1 || docker network create $NETWORK
