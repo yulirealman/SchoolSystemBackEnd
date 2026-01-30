@@ -32,7 +32,7 @@ jobs:
       - name: Save Docker image
         run: docker save schoolsystem:latest | gzip > schoolsystem.tar.gz
 
-      # 6. 拷贝到服务器
+      # 6. 拷贝到服务器（固定路径，避免变量坑）
       - name: Copy image to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -53,4 +53,14 @@ jobs:
             docker load < /tmp/schoolsystem.tar.gz
             docker stop schoolsystem || true
             docker rm schoolsystem || true
-            docker run -d --name schoolsystem --network mynetwork -p 8080:8080 --restart unless-stopped -e SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_HOST }}:3306/${{ secrets.MYSQL_DB }}?useSSL=false&serverTimezone=UTC -e SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }} -e SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }} schoolsystem:latest
+            docker run -d \
+              --name schoolsystem \
+              --network mynetwork \
+              -p 8080:8080 \
+              --restart unless-stopped \
+              -e SPRING_DATASOURCE_URL=jdbc:mysql://${{ secrets.MYSQL_HOST }}:3306/${{ secrets.MYSQL_DB }}?useSSL=false&serverTimezone=UTC \
+              -e SPRING_DATASOURCE_USERNAME=${{ secrets.MYSQL_USER }} \
+              -e SPRING_DATASOURCE_PASSWORD=${{ secrets.MYSQL_PASSWORD }} \
+              schoolsystem:latest
+
+
