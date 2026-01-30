@@ -1,4 +1,4 @@
-name: CI + Deploy to Server
+name: CI + Docker + Deploy (Java 25)
 
 on:
   push:
@@ -9,8 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. 拉代码
       - uses: actions/checkout@v4
 
+      # 2. Java 25
       - name: Set up JDK 25
         uses: actions/setup-java@v4
         with:
@@ -18,15 +20,19 @@ jobs:
           java-version: '25'
           cache: maven
 
+      # 3. Maven 打包（跳测试）
       - name: Build jar
         run: mvn clean package -DskipTests
 
+      # 4. 构建 Docker 镜像
       - name: Build Docker image
         run: docker build -t schoolsystem:latest .
 
+      # 5. 导出镜像为 tar.gz
       - name: Save Docker image
         run: docker save schoolsystem:latest | gzip > schoolsystem.tar.gz
 
+      # 6. 拷贝到服务器（固定路径，避免变量坑）
       - name: Copy image to server
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -34,8 +40,9 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "schoolsystem.tar.gz"
-          target: "/home/${{ secrets.SERVER_USER }}/"
+          target: "/tmp/"
 
+      # 7. SSH 部署
       - name: Deploy on server
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -43,7 +50,7 @@ jobs:
           username: ${{ secrets.SERVER_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            docker load < ~/schoolsystem.tar.gz
+            docker load < /tmp/schoolsystem.tar.gz
             docker stop schoolsystem || true
             docker rm schoolsystem || true
             docker run -d \
