@@ -1,40 +1,24 @@
-name: Spring Boot CI/CD (JDK 25)
+name: Java CI with Maven
 
 on:
   push:
     branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 拉取代码
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 安装 JDK 25
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '25'
-          cache: maven
 
-      - name: Maven 打包
-        run: mvn clean package -DskipTests
-
-      - name: 构建 Docker 镜像
-        run: docker build -t springboot-jdk25:latest .
-
-      - name: SSH 登录服务器并部署
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: |
-            docker stop springboot || true
-            docker rm springboot || true
-            docker run -d \
-              --name springboot \
-              -p 8080:8080 \
-              springboot-jdk25:latest
+      - name: Build with Maven
+        run: mvn -B clean package
