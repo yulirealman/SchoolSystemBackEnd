@@ -1,17 +1,14 @@
 spring:
   application:
     name: SchoolSystem
-#  datasource:
+  datasource:
 #    url: jdbc:mysql://localhost:3306/school_system
-##    url: jdbc:mysql://mysql:3306/schoolsystem
+    url: jdbc:mysql://mysql:3306/schoolsystem
 #    username: root
 #    password: 123456
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-    datasource:
-      url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DB}/${MYSQL_DB_OPTIONS:}
-      username: ${MYSQL_USER:root}
-      password: ${MYSQL_PASSWORD:}
-      driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
   servlet:
     multipart:
       max-file-size: 10MB
